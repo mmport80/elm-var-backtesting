@@ -1,0 +1,43 @@
+module FileUpload where
+
+import String
+import Text
+
+import Graphics.Input (Input, input)
+import Graphics.Input.Field as Field
+
+import List
+
+--different 'output' port for each calc
+--signal in array of strings out
+--or a "signal string array" type
+port output : Signal [String]
+port output = process  <~ openFromFile
+
+--Access cols by title row names
+--parse title row, turn into array
+--select csvfile.column1 and return 0
+--use 0 as an index to access data
+
+
+--get head
+--each header should refer to an index number
+--i.e. {exposure: 0, quantity: 1, ..., coupon: n}
+--
+--remove head when dealing with data
+
+
+--type 'signal string'
+port openFromFile : Signal String
+
+
+process : String -> [String]
+process x = x |> String.lines |> map splitWithCommas |> head
+
+zipUp : [[String]] -> [(String, String)]
+zipUp xs = map (\ys xs -> List.zip head xs ys ) tail xs
+
+splitWithCommas : String -> [String]
+splitWithCommas x = x |> String.split ","
+
+

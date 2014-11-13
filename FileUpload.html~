@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <script type="text/javascript" src="./elm-runtime.js"></script>
+            
+    <script type="text/javascript" src="build/FileUpload3.js"></script>
+  </head>
+  <body>
+  <p>
+    File upload using Elm ports
+  <p>
+  <input type="file" id="fileinput" class="upload"/>
+  <div>
+ 	 Historical <span id='outputHistorical'>jdjdj</span>
+  </div>
+  <div>
+         Normal <span id='outputNormal'>jdjdj</span>
+  </div>
+  <div>
+         T3 <span id='outputT3'>jdjdj</span>
+  </div>
+  </body>
+  <script type="text/javascript" src="Ports.js"></script>
+</html>

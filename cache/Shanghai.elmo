@@ -1,0 +1,33 @@
+Elm.Shanghai = Elm.Shanghai || {};
+Elm.Shanghai.make = function (_elm) {
+   "use strict";
+   _elm.Shanghai = _elm.Shanghai || {};
+   if (_elm.Shanghai.values)
+   return _elm.Shanghai.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _A = _N.Array.make(_elm),
+   _E = _N.Error.make(_elm),
+   $moduleName = "Shanghai",
+   $Native$Json = Elm.Native.Json.make(_elm),
+   $Native$Ports = Elm.Native.Ports.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $String = Elm.String.make(_elm);
+   var openFromFile = $Native$Ports.portIn("openFromFile",
+   $Native$Ports.incomingSignal(function (v) {
+      return typeof v === "string" || typeof v === "object" && v instanceof String ? v : _E.raise("invalid input, expecting JSString but got " + v);
+   }));
+   var output = $Native$Ports.portOut("output",
+   $Native$Ports.outgoingSignal(function (v) {
+      return _L.toArray(v).map(function (v) {
+         return v;
+      });
+   }),
+   A2($Signal._op["<~"],
+   $String.lines,
+   openFromFile));
+   _elm.Shanghai.values = {_op: _op};
+   return _elm.Shanghai.values;
+};

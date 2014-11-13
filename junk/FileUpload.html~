@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <!--<script type="text/javascript" src="http://elm-lang.org/elm-runtime.js"></script>-->
+    <script type="text/javascript" src="/home/john/.cabal/share/Elm-0.13/elm-runtime.js"></script>
+    
+    
+    <script type="text/javascript" src="build/FileUpload3.js"></script>
+  </head>
+  <body>
+  <p>
+    File upload using Elm ports
+  <p>
+  <input type="file" id="fileinput" class="upload"/>
+  <div>
+ 	 <span id='output'>jdjdj</span>
+  </div>
+  </body>
+  <script type="text/javascript" src="Ports.js"></script>
+</html>
