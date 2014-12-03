@@ -24,7 +24,7 @@ Elm.Utils.make = function (_elm) {
             case "[]":
             return $Maybe.Nothing;}
          _E.Case($moduleName,
-         "between lines 32 and 34");
+         "between lines 51 and 53");
       }();
    };
    var safeTail = function (xs) {

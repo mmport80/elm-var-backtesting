@@ -1,0 +1,275 @@
+Elm.GetAnalytics = Elm.GetAnalytics || {};
+Elm.GetAnalytics.make = function (_elm) {
+   "use strict";
+   _elm.GetAnalytics = _elm.GetAnalytics || {};
+   if (_elm.GetAnalytics.values)
+   return _elm.GetAnalytics.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _A = _N.Array.make(_elm),
+   _E = _N.Error.make(_elm),
+   $moduleName = "GetAnalytics",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Maybe = Elm.Maybe.make(_elm),
+   $Native$Json = Elm.Native.Json.make(_elm),
+   $Native$Ports = Elm.Native.Ports.make(_elm),
+   $Signal = Elm.Signal.make(_elm),
+   $Stats = Elm.Stats.make(_elm),
+   $Trampoline = Elm.Trampoline.make(_elm),
+   $Utils = Elm.Utils.make(_elm);
+   var getReturns = function (xs) {
+      return $List.zipWith(F2(function (x,
+      y) {
+         return A2($Basics.logBase,
+         $Basics.e,
+         x / y);
+      }))($Utils.safeTail$(xs))($Utils.safeTail(xs));
+   };
+   var horizonFilter = F2(function (h,
+   ns) {
+      return $List.map(function (_v4) {
+         return function () {
+            switch (_v4.ctor)
+            {case "_Tuple2": return _v4._1;}
+            _E.Case($moduleName,
+            "on line 151, column 61 to 62");
+         }();
+      })($List.filter(function (_v0) {
+         return function () {
+            switch (_v0.ctor)
+            {case "_Tuple2":
+               return _U.eq(A2($Basics.rem,
+                 _v0._0,
+                 h),
+                 0);}
+            _E.Case($moduleName,
+            "on line 150, column 62 to 77");
+         }();
+      })($List.indexedMap(F2(function (v0,
+      v1) {
+         return {ctor: "_Tuple2"
+                ,_0: v0
+                ,_1: v1};
+      }))(ns)));
+   });
+   var lookback = F2(function (l,
+   xs) {
+      return $List.take(l)(xs);
+   });
+   var countBreaches = function (xs) {
+      return function (_v8) {
+         return function () {
+            switch (_v8.ctor)
+            {case "_Tuple2":
+               return $Basics.toFloat($List.length($List.filter(function (x) {
+                    return _U.eq(x,true);
+                 })($List.zipWith(F2(function (v,
+                 r) {
+                    return _U.cmp(A3($Maybe.maybe,
+                    0,
+                    $Basics.identity,
+                    r),
+                    v) < 0;
+                 }))($Utils.safeTail(_v8._1))($Utils.safeTail$(_v8._0)))));}
+            _E.Case($moduleName,
+            "between lines 133 and 138");
+         }();
+      }($List.unzip(xs));
+   };
+   var backTestT = F3(function (accum,
+   l,
+   ns) {
+      return _U.cmp($List.length(ns),
+      l + 1) < 0 ? $Trampoline.Done(accum) : $Trampoline.Continue(function (_v12) {
+         return function () {
+            switch (_v12.ctor)
+            {case "_Tuple0":
+               return A2(backTestT,
+                 A2($List._op["::"],
+                 {ctor: "_Tuple2"
+                 ,_0: $Utils.safeHead(ns)
+                 ,_1: $Utils.safeTail(lookback(l)(ns))},
+                 accum),
+                 l)($List.drop(l)(ns));}
+            _E.Case($moduleName,
+            "between lines 114 and 124");
+         }();
+      });
+   });
+   var backTestT$ = F4(function (p,
+   l,
+   statModel,
+   ns) {
+      return $List.map(function (_v14) {
+         return function () {
+            switch (_v14.ctor)
+            {case "_Tuple2":
+               return {ctor: "_Tuple2"
+                      ,_0: _v14._0
+                      ,_1: statModel(p)(_v14._1)};}
+            _E.Case($moduleName,
+            "on line 105, column 50 to 70");
+         }();
+      })($List.reverse($Trampoline.trampoline(A3(backTestT,
+      _L.fromArray([]),
+      l,
+      ns))));
+   });
+   var init = F5(function (fileData,
+   p,
+   h,
+   l,
+   statModel) {
+      return function (_v22) {
+         return function () {
+            switch (_v22.ctor)
+            {case "_Tuple3": return {_: {}
+                                    ,breaches: _v22._1
+                                    ,horizon: h
+                                    ,kupiecTest: A3($Stats.kTest,
+                                    p,
+                                    $Basics.toFloat(_v22._2),
+                                    _v22._1)
+                                    ,lookback: l
+                                    ,model: statModel.description
+                                    ,percentile: p
+                                    ,sampleSize: _v22._2
+                                    ,var: _v22._0};}
+            _E.Case($moduleName,
+            "between lines 87 and 95");
+         }();
+      }(function (i) {
+         return {ctor: "_Tuple3"
+                ,_0: A2($Maybe.maybe,
+                0,
+                function (_v18) {
+                   return function () {
+                      switch (_v18.ctor)
+                      {case "_Tuple2":
+                         return _v18._1;}
+                      _E.Case($moduleName,
+                      "on line 77, column 67 to 68");
+                   }();
+                })($Utils.safeHead(i))
+                ,_1: countBreaches(i)
+                ,_2: $List.length(i)};
+      }(A3(backTestT$,
+      p,
+      l,
+      statModel.functionName)($Stats.demean(getReturns(horizonFilter(h)(fileData))))));
+   });
+   var modelList = _L.fromArray([{_: {}
+                                 ,description: "T5"
+                                 ,functionName: $Stats.getT5Var}
+                                ,{_: {}
+                                 ,description: "T4"
+                                 ,functionName: $Stats.getT4Var}
+                                ,{_: {}
+                                 ,description: "T3"
+                                 ,functionName: $Stats.getT3Var}
+                                ,{_: {}
+                                 ,description: "Normal"
+                                 ,functionName: $Stats.getNormalVar}
+                                ,{_: {}
+                                 ,description: "Historical"
+                                 ,functionName: $Stats.getPercentileValue}
+                                ,{_: {}
+                                 ,description: "Normal EWMA"
+                                 ,functionName: $Stats.getNormalVarEWMA}]);
+   var lookupstatmodel = function (x) {
+      return $List.head($List.filter(function (y) {
+         return _U.eq(x,
+         y.description);
+      })(modelList));
+   };
+   var Model = F2(function (a,b) {
+      return {_: {}
+             ,description: a
+             ,functionName: b};
+   });
+   var Result = F8(function (a,
+   b,
+   c,
+   d,
+   e,
+   f,
+   g,
+   h) {
+      return {_: {}
+             ,breaches: b
+             ,horizon: f
+             ,kupiecTest: h
+             ,lookback: d
+             ,model: c
+             ,percentile: e
+             ,sampleSize: g
+             ,var: a};
+   });
+   var priceData = $Native$Ports.portIn("priceData",
+   $Native$Ports.incomingSignal(function (v) {
+      return _U.isJSArray(v) ? _L.fromArray(v.map(function (v) {
+         return typeof v === "number" ? v : _E.raise("invalid input, expecting JSNumber but got " + v);
+      })) : _E.raise("invalid input, expecting JSArray but got " + v);
+   }));
+   var statModel = $Native$Ports.portIn("statModel",
+   $Native$Ports.incomingSignal(function (v) {
+      return typeof v === "string" || typeof v === "object" && v instanceof String ? v : _E.raise("invalid input, expecting JSString but got " + v);
+   }));
+   var lookbackP = $Native$Ports.portIn("lookbackP",
+   $Native$Ports.incomingSignal(function (v) {
+      return typeof v === "number" ? v : _E.raise("invalid input, expecting JSNumber but got " + v);
+   }));
+   var horizon = $Native$Ports.portIn("horizon",
+   $Native$Ports.incomingSignal(function (v) {
+      return typeof v === "number" ? v : _E.raise("invalid input, expecting JSNumber but got " + v);
+   }));
+   var percentile = $Native$Ports.portIn("percentile",
+   $Native$Ports.incomingSignal(function (v) {
+      return typeof v === "number" ? v : _E.raise("invalid input, expecting JSNumber but got " + v);
+   }));
+   var outputResult = $Native$Ports.portOut("outputResult",
+   $Native$Ports.outgoingSignal(function (v) {
+      return {var: v.var
+             ,breaches: v.breaches
+             ,model: v.model
+             ,lookback: v.lookback
+             ,percentile: v.percentile
+             ,horizon: v.horizon
+             ,sampleSize: v.sampleSize
+             ,kupiecTest: v.kupiecTest};
+   }),
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["~"],
+   A2($Signal._op["<~"],
+   F5(function (pd,pr,ho,lo,st) {
+      return A5(init,
+      pd,
+      pr,
+      ho,
+      lo,
+      lookupstatmodel(st));
+   }),
+   priceData),
+   percentile),
+   horizon),
+   lookbackP),
+   statModel));
+   _elm.GetAnalytics.values = {_op: _op
+                              ,Result: Result
+                              ,Model: Model
+                              ,modelList: modelList
+                              ,lookupstatmodel: lookupstatmodel
+                              ,init: init
+                              ,backTestT$: backTestT$
+                              ,backTestT: backTestT
+                              ,countBreaches: countBreaches
+                              ,lookback: lookback
+                              ,horizonFilter: horizonFilter
+                              ,getReturns: getReturns};
+   return _elm.GetAnalytics.values;
+};

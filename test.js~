@@ -1,0 +1,2 @@
+ w = new Worker("worker.js");
+ myWorker.postMessage("message");

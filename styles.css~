@@ -1,0 +1,86 @@
+a {color: black;}
+#header{
+	width: 100%;
+	margin: 0;
+	box-shadow: 0em 0.2em 0.5em #E8E8E8;
+	padding-top: 0.5em;
+	}
+#footer{
+	bottom: 0;
+	position: fixed;
+	width: 100%;
+	margin: 0;
+	box-shadow: 0em -0.2em 0.5em #E8E8E8;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 2em;
+	}
+#dropFile
+        {
+        width: 95%;
+	height: 75%;
+	border-style: dashed;
+	border-width: 0.3em;
+	margin: 0.5em auto;
+	margin-top: 2em;
+        }
+.upload {
+        opacity: 0;
+        width: 95%;
+        height: 75%;        
+        }
+body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", Serif;
+        }
+#p {    position:relative;
+	top: 50%;
+	text-align: center;
+	font-size: 3em;
+        } 
+a.demo       {font-size: 0.5em;}
+#form {
+        margin: 0 auto;
+        font-size: 3em;
+        float: right;
+        }
+#links {
+        font-size: 2em;
+        float: right;
+        margin-right: 1em;
+        }
+#title
+        {
+        font-size: 3em;
+        margin-left: 0.1em;
+        }  
+#params
+        {
+        font-size: 3em;
+        margin-left: 0.1em;
+        }  
+select {
+        margin-left: 0.1em;
+        font-size: 1em;
+	font-family: "Times New Roman", Georgia, Serif;
+        }
+#varResult {
+        margin-right: 0.1em;
+        
+        font-size: 3em;
+        float: right;
+        }
+.graph {
+        position: absolute;
+        width: 95%;
+        height: 75%;        
+        }
+rect {fill-opacity: 0.1;
+        
+        }
+        
+#circle {stroke-width: 0.1em;}
+#rectangle { stroke-opacity: 0; }
+
+
+

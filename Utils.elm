@@ -1,20 +1,20 @@
 {--
 Copyright (C) 2014 John Orford
 
-This file is part of elm-var-backtesting.
+This file is part of VARIFY.
 
-elm-var-backtesting is free software: you can redistribute it and/or modify
+VARIFY is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-elm-var-backtesting is distributed in the hope that it will be useful,
+VARIFY is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
-along with elm-var-backtesting.  If not, see <http://www.gnu.org/licenses/>.
+along with VARIFY.  If not, see <http://www.gnu.org/licenses/>.
 --}
 
 module Utils where
